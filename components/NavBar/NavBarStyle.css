@@ -1,0 +1,26 @@
+.navbar {
+    /*display: block;*/
+    background: #0082e6;
+    height: 80px;
+    width: 100%;
+    border: none;
+    /*color: rgb(223, 11, 11);*/
+    font-size: 20px;
+    font-style: italic;
+    margin: 0px 0px;
+    padding: 0px 0px;
+    box-sizing: border-box;
+    cursor: pointer;
+    outline: none;
+}
+
+.navbar a {
+    text-decoration: none;
+    color: #33c5f3;
+    display: block;
+    transition: 0.3s;
+}
+
+.navbar a:hover {
+    color: #101010;
+}
