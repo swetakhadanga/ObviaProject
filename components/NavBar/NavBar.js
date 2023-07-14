@@ -2,7 +2,7 @@ import { Container } from "/obvia/components/Container.js";
 import { ObjectUtils } from "/obvia/lib/ObjectUtils.js";
 import { DependencyContainer } from "/obvia/lib/DependencyContainer.js";
 
-var HeaderNavBar = function(_props) {
+var NavBar = function(_props) {
     let _self = this;
 
     this.beforeAttach = function(e) {
@@ -14,8 +14,7 @@ var HeaderNavBar = function(_props) {
     let _defaultParams = {
         type: "",
         components: [],
-        classes: ["navbar"],
-        websiteName: "My Website",
+        classes: ["navbar"]
     };
 
     ObjectUtils.fromDefault(_defaultParams, _props);
@@ -24,7 +23,7 @@ var HeaderNavBar = function(_props) {
     return r;
 };
 
-DependencyContainer.getInstance().register("HeaderNavBar", HeaderNavBar, DependencyContainer.simpleResolve);
-HeaderNavBar.prototype.ctor = 'HeaderNavBar';
+DependencyContainer.getInstance().register("NavBar", NavBar, DependencyContainer.simpleResolve);
+NavBar.prototype.ctor = 'NavBar';
 
-export { HeaderNavBar };
+export { NavBar };
