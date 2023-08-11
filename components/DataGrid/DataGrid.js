@@ -517,46 +517,57 @@ var DataGrid = function (_props)
 
 
     let _thOpt, _thNumbering;
-    this.createHeader = async function ()
-    {
+    this.createHeader = async function () {
         let $header = $("<tr height='" + _props.defaultRowHeight + "px'></tr>");
-        if (_showRowIndex)
-        {
+
+        if (_showRowIndex) {
             _thNumbering = $("<th style='width:50px;'>#</th>");
             $header.append(_thNumbering);
         }
+
         let len = _columns.length;
         let cr = new Array(len);
-        for (let columnIndex = 0; columnIndex < len; columnIndex++)
-        {
+
+        for (let columnIndex = 0; columnIndex < len; columnIndex++) {
             let column = _columns[columnIndex] = new DataGridColumn(_columns[columnIndex]);
             column.headerRenderer.props.id = column.headerRenderer.props.id ? column.headerRenderer.props.id : "header";
+
             let headerRenderer = await Component.fromLiteral(column.headerRenderer);
-            headerRenderer.on("click", function (e)
-            {
+            headerRenderer.on("click", function (e) {
                 _headerClickHandler.call(_self, e, columnIndex, column);
             });
+
             cr[columnIndex] = headerRenderer.render();
             _headerCells[columnIndex] = headerRenderer;
         }
+
         let p = Promise.all(cr);
-        p.then(function ()
-        {
-            //put elements in an array so jQuery will use documentFragment which is faster
-            cr = []; let els = new Array(len);
-            for (let i = 0; i < len; i++)
-            {
+
+        p.then(function () {
+            // Calculate the header width based on the number of columns
+            let headerWidth = len > 10 ? "350px" : "50px";
+
+            // Put elements in an array so jQuery will use documentFragment which is faster
+            cr = [];
+            let els = new Array(len);
+
+            for (let i = 0; i < len; i++) {
                 let cmpInstance = _headerCells[i];
                 els[i] = cmpInstance.$el;
             }
+
+            // Use the calculated header width
             $header.append(els);
-            _thOpt = $("<th style='width:50px'><i class='fa fa-chevron-circle-right' aria-hidden='true'></i></th>");
+
+            // Use the calculated header width for the options column as well
+            _thOpt = $("<th style='width:" + headerWidth + "'><i class='fa fa-chevron-circle-right' aria-hidden='true'></i></th>");
             $header.append(_thOpt);
             _self.$header.append($header);
         });
+
         return p;
     };
-
+    
     this.cellEdit = async function (rowIndex, columnIndex)
     {
         let e = jQuery.Event('cellEditStarting');
